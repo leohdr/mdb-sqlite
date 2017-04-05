@@ -97,6 +97,8 @@ public class AccessExporter {
         final String indexName = tableName + "_" + index.getName();
         final String uniqueString = index.isUnique() ? "UNIQUE" : "";
 
+        System.out.println(String.format("Create table index:  `%s` `%s`", index.getTable().getName(), index.getName()));
+
         stmtBuilder.append("CREATE "+ uniqueString + " INDEX " + escapeIdentifier(indexName));
         stmtBuilder.append(" ON " + escapeIdentifier(tableName) + " (");
 
@@ -126,6 +128,8 @@ public class AccessExporter {
     private void createTable (final Table table, final Connection jdbc) throws SQLException {
         final List<Column> columns = table.getColumns();
         final StringBuilder stmtBuilder = new StringBuilder();
+
+        System.out.println(String.format("Create table: %s", table.getName()));
 
         /* Create the statement */
         stmtBuilder.append("CREATE TABLE " + escapeIdentifier(table.getName()) + " (");
@@ -211,6 +215,8 @@ public class AccessExporter {
         final StringBuilder stmtBuilder = new StringBuilder();
         final StringBuilder valueStmtBuilder = new StringBuilder();
         
+        System.out.println(String.format("Get table data for: %s", table.getName()));
+
         /* Record the column count */
         final int columnCount = columns.size();
         
@@ -262,7 +268,7 @@ public class AccessExporter {
                         prep.setBytes(i + 1, bStream.toByteArray());
                         break;
                     case FLOAT:
-                        prep.setDouble(+1, (Double) row.get(column.getName()));
+                        prep.setDouble(i+1, (Float) row.get(column.getName()));
                         break;
                     case MONEY:
                         /* Store money as a string. Is there any other valid representation in SQLite? */
