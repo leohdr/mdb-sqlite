@@ -6,6 +6,9 @@
  */
 
 apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "com.plausiblelabs.mdb.Main"
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -13,8 +16,18 @@ tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }
 
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
 dependencies {
-   compile fileTree(dir: 'lib', include: '*.jar')
+    compile('org.xerial:sqlite-jdbc:3.23.1')
+    compile('commons-lang:commons-lang:2.4')
+    compile('commons-logging:commons-logging:1.1.1')
+    compile('com.healthmarketscience.jackcess:jackcess:1.1.16')
+    compile('junit:junit:4.6')
+    // compile(fileTree(dir: 'lib', include: '*.jar'))
 }
 
 jar {
